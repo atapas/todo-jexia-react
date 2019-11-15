@@ -31,13 +31,15 @@ export function get(dataSet, id) {
     //TODO: To implement the logic
 }
 
-export function create(dataSet, payload) {
+export async function create(dataSet, payload) {
+    let record = [];
     try{
         const dataModule = initialize();
-        dataModule.dataset(dataSet).insert(payload).execute();
+        record = await dataModule.dataset(dataSet).insert(payload).execute();
     }catch(e) {
         console.log(`Error in creating ${dataset}: ${e}`);
     }
+    return record;
 }
 
 export function update(dataSet, payload) {

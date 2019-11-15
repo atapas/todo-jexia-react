@@ -31,14 +31,25 @@ const TODO = (props) => {
         }
     };
 
-    const createTODO = (todo, index) => {
+    async function createTODO(todo, index) {
         let newTODOs = [...todos];
-        /*create("todos", {
-            'item': "Test123",
-            'done': false
-        });*/
+        if (newTODOs[index].id === "") {
+            let ret = [];
+            ret = await create("todos", {
+                'item': newTODOs[index].item,
+                'done': false
+            });
+            console.log(ret);
+        
+            newTODOs.splice(index, 1);
+            newTODOs.splice(index, 0, {
+                'id': ret[0].id,
+                'item': ret[0].item,
+                'done': false
+            });
+        } 
         newTODOs.splice(index + 1, 0, {
-            'id': getRandomId(),
+            'id': "",
             'item': "",
             'done': false
         });
