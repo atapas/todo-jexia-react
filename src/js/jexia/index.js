@@ -27,10 +27,6 @@ export async function list(dataSet) {
     
 }
 
-export function get(dataSet, id) {
-    //TODO: To implement the logic
-}
-
 export async function create(dataSet, payload) {
     let record = [];
     try{
@@ -69,4 +65,3 @@ export async function remove(dataSet, filter) {
     }
     return record;
 }
-  
