@@ -70,13 +70,17 @@ const TODO = (props) => {
                         todos.map((todo, i) => (
                             <div key={ todo.id } 
                                 className={`todo ${todo.done && 'todo-done'}`}>
-                                <input
-                                    className={'checkbox'}
-                                    name={todo.item }
-                                    type="checkbox"
-                                    checked={todo.done}
-                                    onChange={ e => toggleDone(e, i)}
-                                />
+                                <label class="ckcontainer">
+                                    <input
+                                        className={'checkbox'}
+                                        name={todo.item }
+                                        type="checkbox"
+                                        checked={todo.done}
+                                        onChange={ e => toggleDone(e, i)}
+                                    />
+                                    <span class="checkmark"></span>
+                                </label>
+                                
                                 <input
                                     className={ 'textbox' }
                                     type="text"
