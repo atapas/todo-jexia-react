@@ -15,22 +15,29 @@ const initialize = () => {
 }
 
 export async function list(dataSet) {
-    const dataModule = initialize();
-    let records = [];
+    try{
+        const dataModule = initialize();
+        let records = [];
+        records = await dataModule.dataset(dataSet).select().execute();
+        console.log(records);
+        return records;
+    }catch(e) {
+        console.log(`Error in listing ${dataset}: ${e}`);
+    }
     
-    records = await dataModule.dataset(dataSet).select().execute();
-
-    console.log(records);
-
-    return records;
 }
 
 export function get(dataSet, id) {
     //TODO: To implement the logic
 }
 
-export function create(dataSet, payloads) {
-     //TODO: To implement the logic
+export function create(dataSet, payload) {
+    try{
+        const dataModule = initialize();
+        dataModule.dataset(dataSet).insert(payload).execute();
+    }catch(e) {
+        console.log(`Error in creating ${dataset}: ${e}`);
+    }
 }
 
 export function update(dataSet, payload) {

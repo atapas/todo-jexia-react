@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { create } from './jexia';
 
 const TODO = (props) => {
     
@@ -32,6 +33,10 @@ const TODO = (props) => {
 
     const createTODO = (todo, index) => {
         let newTODOs = [...todos];
+        /*create("todos", {
+            'item': "Test123",
+            'done': false
+        });*/
         newTODOs.splice(index + 1, 0, {
             'id': getRandomId(),
             'item': "",
