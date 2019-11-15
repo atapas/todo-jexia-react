@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background: black;
+	color: #fff;
+}
+
+.todo {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.todo-done .checkbox {
+    color: #000;
+    background: #fff;
+  }
+  
+.todo-done .textbox {
+    text-decoration: line-through;
+}
+
+.textbox {
+    border: none;
+    background: transparent;
+    color: #fff;
+    outline: none;
+    width: 100%;
+}
+  
+  
