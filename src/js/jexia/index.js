@@ -42,8 +42,19 @@ export async function create(dataSet, payload) {
     return record;
 }
 
-export function update(dataSet, payload) {
-     //TODO: To implement the logic
+export async function update(dataSet, payload) {
+    let record = [];
+    try {
+        const dataModule = initialize();
+        record = await dataModule.dataset(dataSet)
+          .update(payload.toUpdate)
+          .where(field => field(payload.key).isLike(payload.value))
+          .execute();
+
+    }catch(e) {
+        console.log(`Error in updating ${dataset}: ${e}`);
+    }
+    return record;
 }
 
 export async function remove(dataSet, filter) {

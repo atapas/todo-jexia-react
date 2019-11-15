@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import { create, remove } from './jexia';
+import { create, update, remove } from './jexia';
 
 const TODO = (props) => {
     
     const [todos, setTodos] = useState(props.todos);
     
-    const getRandomId = () => {
-        return Math.floor(Math.random() * 100);
-    }
-
     const updateTODO = (event, index) => {
         let newTODO = (event.target.value);
         let newTODOs = [...todos];
@@ -81,9 +77,17 @@ const TODO = (props) => {
         }, 0);
     };
 
-    const toggleDone = (event, index) => {
+    async function toggleDone(index) {
         let newTODOs = [...todos];
         newTODOs[index].done = !newTODOs[index].done;
+
+        await update('todos', {
+            'key': 'id',
+            'value': newTODOs[index].id,
+            'toUpdate': {
+                'done': newTODOs[index].done
+            }
+        });
         setTodos(newTODOs);
     }
 
@@ -102,7 +106,7 @@ const TODO = (props) => {
                                         name={todo.item }
                                         type="checkbox"
                                         checked={todo.done}
-                                        onChange={ e => toggleDone(e, i)}
+                                        onChange={ e => toggleDone(i) }
                                     />
                                     <span className="checkmark"></span>
                                 </label>
