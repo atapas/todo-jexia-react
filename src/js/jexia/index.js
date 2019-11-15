@@ -46,7 +46,16 @@ export function update(dataSet, payload) {
      //TODO: To implement the logic
 }
 
-export function remove(dataSet, filter) {
-     //TODO: To implement the logic
+export async function remove(dataSet, filter) {
+    let record = [];
+    try{
+        const dataModule = initialize();
+        record = await dataModule.dataset(dataSet)
+            .delete().where(field => field(filter.key).isLike(filter.value))
+            .execute();
+    }catch (e) {
+        console.log(`Error in deleting ${dataset}: ${e}`);
+    }
+    return record;
 }
   

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { create } from './jexia';
+import { create, remove } from './jexia';
 
 const TODO = (props) => {
     
@@ -62,11 +62,18 @@ const TODO = (props) => {
         },0);
     };
 
-    const deleteTODO = (index) => {
+    async function deleteTODO (index) {
         if (index === 0) {
             return;
         }
         let newTODOs = [...todos];
+        let todoToDelete = newTODOs[index];
+        if (todoToDelete.id !== "") {
+            let deletedRecord = await remove("todos", {
+                'key': 'id',
+                'value': todoToDelete.id
+            });
+        }
         newTODOs.splice(index, 1);
         setTodos(newTODOs);
         setTimeout(() => {
@@ -82,7 +89,7 @@ const TODO = (props) => {
 
     return(
         <div>
-            <h1>TODO</h1>
+            <h1>TODO({todos.length})</h1>
             <form>
                 <ul>
                     {
