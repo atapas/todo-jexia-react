@@ -34,6 +34,9 @@ const TODO = (props) => {
     async function createTODO(todo, index) {
         let newTODOs = [...todos];
         if (newTODOs[index].id === "") {
+            if (newTODOs[index].item.trim().length === 0) {
+                return;
+            }
             let ret = [];
             ret = await create("todos", {
                 'item': newTODOs[index].item,
