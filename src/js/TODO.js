@@ -5,9 +5,19 @@ const TODO = (props) => {
     
     const [todos, setTodos] = useState(props.todos);
     
-    const updateTODO = (event, index) => {
+    async function updateTODO(event, index) {
         let newTODO = (event.target.value);
         let newTODOs = [...todos];
+        /*if (newTODO.trim().length > 0
+            && newTODOs[index].id.trim().length > 0) {
+            await update('todos', {
+                'key': 'id',
+                'value': newTODOs[index].id,
+                'toUpdate': {
+                    'item': newTODO
+                }
+            });
+        }*/
         newTODOs[index].item = newTODO;
         setTodos(newTODOs);
     };
@@ -46,7 +56,25 @@ const TODO = (props) => {
                 'item': ret[0].item,
                 'done': false
             });
-        } 
+        } else {
+            if (newTODOs[index].item.trim().length !== 0) {
+                    let ret = [];
+                    ret = await update('todos', {
+                        'key': 'id',
+                        'value': newTODOs[index].id,
+                        'toUpdate': {
+                            'item': newTODOs[index].item
+                        }
+                    });
+        
+                    newTODOs.splice(index, 1);
+                    newTODOs.splice(index, 0, {
+                        'id': ret[0].id,
+                        'item': ret[0].item,
+                        'done': ret[0].done
+                    });
+            }
+        }
         newTODOs.splice(index + 1, 0, {
             'id': "",
             'item': "",
