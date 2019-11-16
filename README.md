@@ -10,6 +10,11 @@
 
 See it in [Action here](https://todo-jexia-react.netlify.com/).
 
+# Demo
+
+[![Redux Core Concepts](site/flow.gif)](https://tapasadhikary.com)
+
+
 # Build and Deployment Status
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c260a474-fd1e-4a4b-b374-5ba8c589dc23/deploy-status)](https://app.netlify.com/sites/todo-jexia-react/deploys)
