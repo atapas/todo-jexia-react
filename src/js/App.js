@@ -1,5 +1,6 @@
 import React from "react";
 import TODO from './TODO';
+import Loader from './Loader';
 
 import { useList } from './jexia/useList';
 
@@ -10,8 +11,12 @@ const App = () => {
     <React.Fragment>
       {
         loading ?
-          (<h1>Loading Todos from Jexia...</h1>) 
-          : (<TODO todos={ data }/>) 
+          <div>
+            <h1>Loading TODOs from Jexia</h1>
+            <Loader />
+          </div>
+          : 
+          (<TODO todos={ data }/>) 
       }
     </React.Fragment>
   );
