@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { create, update, remove } from './jexia';
+import Loader from './Loader';
 
 const TODO = (props) => {
     
     const [todos, setTodos] = useState(props.todos);
+    const [loading, setLoading] = useState(false);
     
     async function updateTODO(event, index) {
         let newTODO = (event.target.value);
         let newTODOs = [...todos];
-        if (newTODO.trim().length > 0
+        /*if (newTODO.trim().length > 0
             && newTODOs[index].id.trim().length > 0) {
             await update('todos', {
                 'key': 'id',
@@ -17,7 +19,7 @@ const TODO = (props) => {
                     'item': newTODO
                 }
             });
-        }
+        }*/
         newTODOs[index].item = newTODO;
         setTodos(newTODOs);
     };
@@ -43,6 +45,7 @@ const TODO = (props) => {
             if (newTODOs[index].item.trim().length === 0) {
                 return;
             }
+            setLoading(true);
             let ret = [];
             ret = await create("todos", {
                 'item': newTODOs[index].item,
@@ -56,7 +59,7 @@ const TODO = (props) => {
                 'item': ret[0].item,
                 'done': false
             });
-        } /*else {
+        } else {
             if (newTODOs[index].item.trim().length !== 0) {
                     let ret = [];
                     ret = await update('todos', {
@@ -74,7 +77,7 @@ const TODO = (props) => {
                         'done': ret[0].done
                     });
             }
-        }*/
+        }
         newTODOs.splice(index + 1, 0, {
             'id': "",
             'item': "",
@@ -84,12 +87,14 @@ const TODO = (props) => {
         setTimeout(()=> {
             document.forms[0].elements[(index + 1)*2 + 1].focus();
         },0);
+        setLoading(false);
     };
 
     async function deleteTODO (index) {
         if (index === 0) {
             return;
         }
+        setLoading(true);
         let newTODOs = [...todos];
         let todoToDelete = newTODOs[index];
         if (todoToDelete.id !== "") {
@@ -103,9 +108,11 @@ const TODO = (props) => {
         setTimeout(() => {
             document.forms[0].elements[index*2 - 1].focus();
         }, 0);
+        setLoading(false);
     };
 
     async function toggleDone(index) {
+        setLoading(true);
         let newTODOs = [...todos];
         newTODOs[index].done = !newTODOs[index].done;
 
@@ -117,11 +124,39 @@ const TODO = (props) => {
             }
         });
         setTodos(newTODOs);
+        setLoading(false);
     }
 
+    let loader = '';
+    if (loading) {
+        loader = <Loader />
+    }
+
+    const getActualTODOCount = () => {
+        let ret = [];
+        if (todos) {
+            ret = todos.filter((elem) => {
+                return (!elem.done && elem.id.trim().length > 0);
+            });
+        }
+        return ret.length;
+    }
+
+    const todoHeaderText = () => {
+        let message =  '';
+        const actualTodos = getActualTODOCount();
+        if (actualTodos === 0) {
+            message = 'Hurray! You do not have any TODOs.'
+        } else {
+            message = `Karma says, you got ${actualTodos} thing(s) to do`
+        }
+        return message;
+    }
     return(
         <div>
-            <h1>TODO({todos.length})</h1>
+            <h1>TODO</h1>
+            <h3>{ todoHeaderText() }</h3>
+            { loader }
             <form>
                 <ul>
                     {
