@@ -12,7 +12,7 @@ See it in [Action here](https://todo-jexia-react.netlify.com/).
 
 # Demo
 
-[![Redux Core Concepts](site/flow.gif)](https://tapasadhikary.com)
+[![todo-jexia](site/flow.gif)](https://tapasadhikary.com)
 
 
 # Build and Deployment Status
